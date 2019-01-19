@@ -2,10 +2,12 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 const templates = Array.from(document.querySelectorAll(`template`));
 const mainNode = document.querySelector(`#main`);
+
 const KEYCODES = {
   ARROW_PREV: 37,
   ARROW_NEXT: 39
 };
+
 let currentScreenNum = 0;
 
 const wrap = (it) => {
@@ -14,6 +16,7 @@ const wrap = (it) => {
   shadow.appendChild(content);
   return shadow.cloneNode(true);
 };
+
 const getScreen = (num) => {
   mainNode.innerHTML = ``;
   mainNode.appendChild(wrap(templates[num]));
@@ -22,17 +25,27 @@ const getScreen = (num) => {
 
 getScreen(1);
 
-const arrowsKeyUpHandler = (e) => {
+const arrowsKeyupHandler = (e) => {
   if (e.keyCode === KEYCODES.ARROW_NEXT && currentScreenNum < templates.length - 1) {
     getScreen(++currentScreenNum);
   }
   if (e.keyCode === KEYCODES.ARROW_PREV && currentScreenNum > 0) {
     getScreen(--currentScreenNum);
   }
-  removeEventListener(`keyup`, arrowsKeyUpHandler);
+  removeEventListener(`keyup`, arrowsKeyupHandler);
 };
 
-document.addEventListener(`keyup`, arrowsKeyUpHandler);
+const arrowsBtnClickHandler = (e) => {
+  if (e.target.classList.contains(`arrows__btn--next`) && currentScreenNum < templates.length - 1) {
+    getScreen(++currentScreenNum);
+  }
+  if (e.target.classList.contains(`arrows__btn--prev`) && currentScreenNum > 0) {
+    getScreen(--currentScreenNum);
+  }
+  removeEventListener(`click`, arrowsBtnClickHandler);
+};
+
+document.addEventListener(`keyup`, arrowsKeyupHandler);
 
 const buttonsMarkup = `<div class="arrows__wrap">
 <style>
@@ -48,7 +61,12 @@ const buttonsMarkup = `<div class="arrows__wrap">
     padding: 5px 20px;
   }
 </style>
-<button class="arrows__btn"><-</button>
-<button class="arrows__btn">-></button>
+<button class="arrows__btn arrows__btn--prev"><-</button>
+<button class="arrows__btn arrows__btn--next">-></button>
 </div>`;
+
 document.body.insertAdjacentHTML(`beforeend`, buttonsMarkup);
+
+const arrowBtnsNode = document.querySelector(`.arrows__wrap`);
+
+arrowBtnsNode.addEventListener(`click`, arrowsBtnClickHandler);
