@@ -1,5 +1,6 @@
 import getNode from '../utils/getNode';
 import handlers from '../handlers';
+import greeting from './greeting';
 
 const statsScreen = `
 <header class="header">
