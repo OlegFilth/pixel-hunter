@@ -28,14 +28,8 @@ const greetingScreen = `
 
 const getGreetingScreen = getNode(greetingScreen);
 
+const greetingContinueNode = getGreetingScreen.querySelector(`.greeting__continue`);
 
-// document.addEventListener(`elementAdded`, () => {
-//   if (!ELEMENTS.greetingcontinue) {
-//     return;
-//   } else {
-//     ELEMENTS.greetingcontinue.addEventListener(`click`, () => {
-//       showScreen(ELEMENTS.main, rules);
-//     });
-//   }
-// });
+greetingContinueNode.addEventListener(`click`, () => showScreen(ELEMENTS.main, rules));
+
 export default getGreetingScreen;

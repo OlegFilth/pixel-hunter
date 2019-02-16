@@ -12,10 +12,8 @@ const introScreen = `
 
 const getIntroScreen = getNode(introScreen);
 
-document.addEventListener(`elementAdded`, () => {
-  ELEMENTS.introasterisk.addEventListener(`click`, () => {
-    showScreen(ELEMENTS.main, greeting);
-  });
-});
+const asteriskNode = getIntroScreen.querySelector(`.intro__asterisk`);
+
+asteriskNode.addEventListener(`click`, () => showScreen(ELEMENTS.main, greeting));
 
 export default getIntroScreen;

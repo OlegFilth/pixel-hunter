@@ -1,5 +1,9 @@
 import ELEMENTS from '../elements';
 import getNode from '../utils/getNode';
+import showScreen from '../utils/showScreen';
+import game1 from './game1';
+import handlers from '../handlers';
+import greeting from './greeting';
 
 const rulesScreen = `
   <header class="header">
@@ -33,14 +37,23 @@ const rulesScreen = `
 
 const getRulesScreen = getNode(rulesScreen);
 
+const rulesInputNode = getRulesScreen.querySelector(`.rules__input`);
+const rulesButtonNode = getRulesScreen.querySelector(`.rules__button`);
+const rulesFormNode = getRulesScreen.querySelector(`.rules__form`);
+const backButtonNode = getRulesScreen.querySelector(`.back`);
 
-// document.addEventListener(`elementAdded`, () => {
-//   if (!ELEMENTS.rulesbutton) {
-//     return;
-//   } else {
-//     ELEMENTS.greetingcontinue.addEventListener(`click`, () => {
-//       showScreen(ELEMENTS.main, greeting);
-//     });
-//   }
-// });
+rulesInputNode.addEventListener(`input`, (e) => {
+  if (!e.target.value) {
+    rulesButtonNode.disabled = true;
+  } else {
+    rulesButtonNode.disabled = false;
+  }
+});
+
+rulesFormNode.addEventListener(`submit`, (e) => {
+  e.preventDefault();
+  showScreen(ELEMENTS.main, game1);
+});
+
+backButtonNode.addEventListener(`click`, () => handlers.backToStartScreenHandler(greeting));
 export default getRulesScreen;
